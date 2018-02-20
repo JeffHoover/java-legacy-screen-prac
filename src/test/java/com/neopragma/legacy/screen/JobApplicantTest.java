@@ -76,7 +76,7 @@ public class JobApplicantTest {
 	}
 
 	@Test
-	public void ssnFormattingTest() {
+	public void formatSsn() {
 		jobApplicant.setSsn("123456789");
 		assertEquals("123-45-6789", jobApplicant.formatSsn());
 	}
