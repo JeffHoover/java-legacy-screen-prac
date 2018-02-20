@@ -114,25 +114,25 @@ public class JobApplicantTest {
 	@Test
 	public void ssnAreaNumberIs000() {
 		jobApplicant.setSsn("000223333");
-		assertEquals(SSN_BAD_START, jobApplicant.validateSsn());
+		assertEquals(SSN_BAD_AREA_NAME, jobApplicant.validateSsn());
 	}
 
 	@Test
 	public void ssnAreaNumberIs666() {
 		jobApplicant.setSsn("666223333");
-		assertEquals(SSN_BAD_START, jobApplicant.validateSsn());
+		assertEquals(SSN_BAD_AREA_NAME, jobApplicant.validateSsn());
 	}
 
 	@Test
 	public void ssnAreaNumberStartsWith9() {
 		jobApplicant.setSsn("900223333");
-		assertEquals(SSN_BAD_START, jobApplicant.validateSsn());
+		assertEquals(SSN_BAD_AREA_NAME, jobApplicant.validateSsn());
 	}
 
 	@Test
 	public void ssnSerialNumberIs0000() {
 		jobApplicant.setSsn("111220000");
-		assertEquals(SSN_ZEROS_IN_MIDDLE, jobApplicant.validateSsn());
+		assertEquals(SSN_BAD_SERIAL_NUMBER, jobApplicant.validateSsn());
 	}
 
 	@Test
