@@ -23,6 +23,15 @@ public class JobApplicant {
 	private String middleName = null;
 	private String lastName = null;
 	
+	private String city;
+	private String state;
+	
+	private String ssn;
+	
+	private String[] specialCases = new String[] {
+	    "219099999", "078051120"
+	};
+	
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
 		this.middleName = middleName == null ? "" : middleName;
@@ -60,16 +69,7 @@ public class JobApplicant {
 			return 6;
 		}
 	}
-	
-	private String ssn;
-	
-	private String[] specialCases = new String[] {
-	    "219099999", "078051120"
-	};
-	
-	private String zipCode;    
-	private String city;
-	private String state;
+
 
 	public void setSsn(String ssn) {
 		if ( ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})") ) {
@@ -108,20 +108,24 @@ public class JobApplicant {
 		return 0;
 	}
 
-	public void setZipCode(String zipCode) throws URISyntaxException, IOException {
-		this.zipCode = zipCode;
+	public void lookupCityAndStateFromZip(String zipCode) throws URISyntaxException, IOException {
 		// Use a service to look up the city and state based on zip code.
 		// Save the returned city and state if content length is greater than zero.
 		URI uri = new URIBuilder()
             .setScheme("http")
             .setHost("www.zip-codes.com")
             .setPath("/search.asp")
-            .setParameter("fld-zip", this.zipCode)
+            .setParameter("fld-zip", zipCode)
             .setParameter("selectTab", "0")
             .setParameter("srch-type", "city")
             .build();
         HttpGet request = new HttpGet(uri);
         
+        String tempCity;
+        String tempState;
+        // TODO - Add dependency injection and mock CloseableHttpClient and CloseableHttpResponse
+        // so that we can test what happens should the lookup service fail
+
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse response = httpclient.execute(request);
             HttpEntity entity = response.getEntity();
@@ -139,13 +143,15 @@ public class JobApplicant {
                 contentOffset = result.indexOf(" - ", contentOffset);
                 contentOffset += 3;
                 int stateOffset = result.indexOf(" ", contentOffset);
-                city = result.substring(contentOffset, stateOffset);
+                tempCity = result.substring(contentOffset, stateOffset);
                 stateOffset += 1;
-                state = result.substring(stateOffset, stateOffset+2);
+                tempState = result.substring(stateOffset, stateOffset+2);
             } else {
-            	city = "";
-            	state = "";
+            	tempCity = ""; // TODO - Not covered by a test - see above
+            	tempState = "";
             }
+            this.city = tempCity;
+            this.state = tempState;
         }
 	}
 
@@ -164,7 +170,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		setZipCode(zipCode);
+		lookupCityAndStateFromZip(zipCode);
 		save();
 	}
 	
@@ -202,7 +208,7 @@ public class JobApplicant {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.setZipCode(zipCode);
+            jobApplicant.lookupCityAndStateFromZip(zipCode);
             jobApplicant.save();
 		}
 	}
