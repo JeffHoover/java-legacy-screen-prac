@@ -1,5 +1,7 @@
 package com.neopragma.legacy.screen;
 
+import static com.neopragma.legacy.screen.ErrorCode.*;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -51,14 +53,13 @@ public class JobApplicant {
 		return sb.toString();
 	}
 	
-	public int validateName() {
+	public ErrorCode validateName() {
 		if ( firstName.length() > 0 && lastName.length() > 0 ) {
-			return 0;
+			return SUCCESS;
 		} else {
-			return 6;
+			return INVALID_NAME;
 		}
 	}
-
 
 	public void setSsn(String ssn) {
 		if ( ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})") ) {
@@ -77,24 +78,24 @@ public class JobApplicant {
 		return sb.toString();
 	}
 
-	public int validateSsn() {
+	public ErrorCode validateSsn() {
 		if ( !ssn.matches("\\d{9}") ) {
-			return 1;
+			return SSN_REGEX_FAIL;
 		}
 		if ( "000".equals(ssn.substring(0,3)) || 
 			 "666".equals(ssn.substring(0,3)) ||
 			 "9".equals(ssn.substring(0,1)) ) {
-			return 2;
+			return SSN_BAD_START;
 		}
 		if ( "0000".equals(ssn.substring(5)) ) {
-			return 3;
+			return SSN_ZEROS_IN_MIDDLE;
 		}
 		for (int i = 0 ; i < specialCases.length ; i++ ) {
 			if ( ssn.equals(specialCases[i]) ) {
-				return 4;
+				return SSN_SPECIAL_CASE;
 			}
 		}
-		return 0;
+		return SUCCESS;
 	}
 
 	public void lookupCityAndStateFromZip(String zipCode) throws URISyntaxException, IOException {
