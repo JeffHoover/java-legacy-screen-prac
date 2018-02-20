@@ -37,30 +37,38 @@ public class CityStateLookup {
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse response = httpclient.execute(request);
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-              	BufferedReader rd = new BufferedReader(
-                        new InputStreamReader(response.getEntity().getContent()));
-           		StringBuilder result = new StringBuilder();
-           		String line = "";
-           		while ((line = rd.readLine()) != null) {
-           			result.append(line);
-       		    }
-                int metaOffset = result.indexOf("<meta ");
-                int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
-                contentOffset += 19;
-                contentOffset = result.indexOf(" - ", contentOffset);
-                contentOffset += 3;
-                int stateOffset = result.indexOf(" ", contentOffset);
-                city = result.substring(contentOffset, stateOffset);
-                stateOffset += 1;
-                state = result.substring(stateOffset, stateOffset+2);
+            if (response.getEntity() != null) {
+              	StringBuilder result = extractResultFromResponse(response);
+                extractCityAndStateFromResult(result);
             } else {
             	city = ""; // TODO - Not covered by a test - see above
             	state = "";
             }
 
         }
+	}
+
+	private StringBuilder extractResultFromResponse(CloseableHttpResponse response) throws IOException {
+		BufferedReader rd = new BufferedReader(
+		        new InputStreamReader(response.getEntity().getContent()));
+		StringBuilder result = new StringBuilder();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		return result;
+	}
+
+	private void extractCityAndStateFromResult(StringBuilder result) {
+		int metaOffset = result.indexOf("<meta ");
+		int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
+		contentOffset += 19;
+		contentOffset = result.indexOf(" - ", contentOffset);
+		contentOffset += 3;
+		int stateOffset = result.indexOf(" ", contentOffset);
+		city = result.substring(contentOffset, stateOffset);
+		stateOffset += 1;
+		state = result.substring(stateOffset, stateOffset+2);
 	}
 
 	public String getCity() {
