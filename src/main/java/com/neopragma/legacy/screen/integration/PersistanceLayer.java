@@ -14,9 +14,9 @@ public class PersistanceLayer {
 
 	public JobApplicant get(String ssn) throws URISyntaxException, IOException {
 		
-		JobApplicant jeff = new JobApplicant();
-		jeff.add("Jeff", "", "Hoover", "123456789", "02134");
+		JobApplicant temporaryUser = new JobApplicant();
+		temporaryUser.add("Jeff", "", "Hoover", ssn, "02134");
 		
-		return jeff;
+		return temporaryUser;
 	}
 }
