@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -36,31 +35,20 @@ public class CityStateLookup {
         // so that we can test what happens should the lookup service fail
 
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            CloseableHttpResponse response = httpclient.execute(request);
-            if (response.getEntity() != null) {
-              	StringBuilder result = extractResult(response);
-                extractCityAndStateUsingSideEffect(result);
+            CloseableHttpResponse cityStateLookupResponse = httpclient.execute(request);
+            if (cityStateLookupResponse.getEntity() != null) {
+              	extractCityAndStateUsingSideEffect(cityStateLookupResponse);
             } else {
             	city = ""; // TODO - Not covered by a test - see above
             	state = "";
             }
-
         }
 	}
 
-	private StringBuilder extractResult(CloseableHttpResponse response) throws IOException {
-		BufferedReader rd = new BufferedReader(
-		        new InputStreamReader(response.getEntity().getContent()));
-		StringBuilder result = new StringBuilder();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-		return result;
-	}
-
-	private void extractCityAndStateUsingSideEffect(StringBuilder result) {
-		int metaOffset = result.indexOf("<meta ");
+	private void extractCityAndStateUsingSideEffect(CloseableHttpResponse cityStateLookupResponse) throws IOException {
+		StringBuilder result = extractHtml(cityStateLookupResponse);
+		
+        int metaOffset = result.indexOf("<meta ");
 		int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
 		contentOffset += 19;
 		contentOffset = result.indexOf(" - ", contentOffset);
@@ -69,6 +57,17 @@ public class CityStateLookup {
 		city = result.substring(contentOffset, stateOffset);
 		stateOffset += 1;
 		state = result.substring(stateOffset, stateOffset+2);
+	}
+
+	private StringBuilder extractHtml(CloseableHttpResponse response) throws IOException {
+		BufferedReader rd = new BufferedReader(
+		        new InputStreamReader(response.getEntity().getContent()));
+		StringBuilder result = new StringBuilder();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		return result;
 	}
 
 	public String getCity() {
