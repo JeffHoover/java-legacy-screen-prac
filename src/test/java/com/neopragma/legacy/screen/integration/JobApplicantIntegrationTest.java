@@ -50,4 +50,11 @@ public class JobApplicantIntegrationTest {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals("Allston", jobApplicant.getCity());
 	}
+
+	@Test
+	public void itCurrentlyGivesWeirdResultFromBadZipCode() throws URISyntaxException, IOException {
+		jobApplicant.lookupCityAndState("1");
+		assertEquals("Facts", jobApplicant.getCity());
+		assertEquals("& ", jobApplicant.getState());
+	}
 }
