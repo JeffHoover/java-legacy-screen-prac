@@ -21,14 +21,14 @@ import com.neopragma.legacy.screen.JobApplicant;
  */
 
 public class JobApplicantTest {
-	
+
 	private JobApplicant jobApplicant;
-	
+
 	@Before
 	public void beforeEach() {
 		jobApplicant = new JobApplicant();
 	}
-	
+
 	@Test
 	public void addsApplicant() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
@@ -40,67 +40,73 @@ public class JobApplicantTest {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals(0, jobApplicant.validateSsn());
 	}
-	
+
+	@Test
+	public void addsZipCode() throws Exception {
+		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
+		assertEquals("Allston", jobApplicant.getCity());
+	}
+
 	@Test
 	public void completeNameProvided() {
 		jobApplicant.setName("First", "Middle", "Last");
 		assertEquals(0, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void firstAndLastNamesProvided() {
 		jobApplicant.setName("First", null, "Last");
 		assertEquals(0, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void missingFirstName() {
 		jobApplicant.setName(null, null, "Last");
 		assertEquals(6, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void missingLastName() {
 		jobApplicant.setName("First", null, null);
 		assertEquals(6, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void completeSpanishNameProvided() {
 		jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", "PrimerApellido", "SegundoApellido");
 		assertEquals(0, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void spanishNameWithOneFirstNameProvided() {
 		jobApplicant.setSpanishName("PrimerNombre", null, "PrimerApellido", "SegundoApellido");
 		assertEquals(0, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void spanishNameWithOneLastNameProvided() {
 		jobApplicant.setSpanishName("PrimerNombre", null, "PrimerApellido", null);
 		assertEquals(0, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void spanishNameWithNoFirstNameProvided() {
 		jobApplicant.setSpanishName(null, null, "PrimerApellido", null);
 		assertEquals(6, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void spanishNameWithNoLastNameProvided() {
 		jobApplicant.setSpanishName("PrimerNombre", "SegundoNombre", null, null);
 		assertEquals(6, jobApplicant.validateName());
 	}
-	
+
 	@Test
 	public void formatEnglishNameLastNameFirst() {
 		jobApplicant.setName("First", "Middle", "Last");
 		assertEquals("Last, First Middle", jobApplicant.formatLastNameFirst());
 	}
-	
+
 	@Test
 	public void ssnFormattingTest() {
 		jobApplicant.setSsn("123456789");
@@ -112,7 +118,7 @@ public class JobApplicantTest {
 		jobApplicant.setSsn("123456789");
 		assertEquals(0, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnWithDashesInWrongPlaces() {
 		jobApplicant.setSsn("12-3456-789");
@@ -124,62 +130,62 @@ public class JobApplicantTest {
 		jobApplicant.setSsn("123-45-6789");
 		assertEquals(0, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnIsTooShort() {
 		jobApplicant.setSsn("12345678");
 		assertEquals(1, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnIsTooLong() {
 		jobApplicant.setSsn("1234567890");
 		assertEquals(1, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnAreaNumberIs000() {
 		jobApplicant.setSsn("000223333");
 		assertEquals(2, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnAreaNumberIs666() {
 		jobApplicant.setSsn("666223333");
 		assertEquals(2, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnAreaNumberStartsWith9() {
 		jobApplicant.setSsn("900223333");
 		assertEquals(2, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void ssnSerialNumberIs0000() {
 		jobApplicant.setSsn("111220000");
 		assertEquals(3, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void itRejectsSsn078051120() {
 		jobApplicant.setSsn("078051120");
 		assertEquals(4, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void itRejectsSsn219099999() {
 		jobApplicant.setSsn("219099999");
 		assertEquals(4, jobApplicant.validateSsn());
 	}
-	
+
 	@Test
 	public void itFindsAddisonTexasBy5DigitZipCode() throws URISyntaxException, IOException {
 		jobApplicant.setZipCode("75001");
 		assertEquals("Addison", jobApplicant.getCity());
 		assertEquals("TX", jobApplicant.getState());
 	}
-	
+
 	@Test
 	public void itFindsMaranaArizonaBy9DigitZipCode() throws URISyntaxException, IOException {
 		jobApplicant.setZipCode("856585578");
