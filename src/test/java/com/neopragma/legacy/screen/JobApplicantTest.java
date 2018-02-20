@@ -15,24 +15,6 @@ public class JobApplicantTest {
 	}
 
 	@Test
-	public void addsApplicant() throws Exception {
-		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
-		assertEquals(0, jobApplicant.validateName());
-	}
-
-	@Test
-	public void addsSSN() throws Exception {
-		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
-		assertEquals(0, jobApplicant.validateSsn());
-	}
-
-	@Test
-	public void addsZipCode() throws Exception {
-		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
-		assertEquals("Allston", jobApplicant.getCity());
-	}
-
-	@Test
 	public void completeNameProvided() {
 		jobApplicant.setName("First", "Middle", "Last");
 		assertEquals(0, jobApplicant.validateName());
