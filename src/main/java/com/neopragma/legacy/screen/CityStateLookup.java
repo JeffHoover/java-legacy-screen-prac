@@ -38,8 +38,8 @@ public class CityStateLookup {
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse response = httpclient.execute(request);
             if (response.getEntity() != null) {
-              	StringBuilder result = extractResultFromResponse(response);
-                extractCityAndStateFromResult(result);
+              	StringBuilder result = extractResult(response);
+                extractCityAndStateUsingSideEffect(result);
             } else {
             	city = ""; // TODO - Not covered by a test - see above
             	state = "";
@@ -48,7 +48,7 @@ public class CityStateLookup {
         }
 	}
 
-	private StringBuilder extractResultFromResponse(CloseableHttpResponse response) throws IOException {
+	private StringBuilder extractResult(CloseableHttpResponse response) throws IOException {
 		BufferedReader rd = new BufferedReader(
 		        new InputStreamReader(response.getEntity().getContent()));
 		StringBuilder result = new StringBuilder();
@@ -59,7 +59,7 @@ public class CityStateLookup {
 		return result;
 	}
 
-	private void extractCityAndStateFromResult(StringBuilder result) {
+	private void extractCityAndStateUsingSideEffect(StringBuilder result) {
 		int metaOffset = result.indexOf("<meta ");
 		int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
 		contentOffset += 19;
