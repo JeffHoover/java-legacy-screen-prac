@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
-/**
- * Job applicant class.
- */
+import com.neopragma.legacy.screen.integration.PersistanceLayer;
+
 public class JobApplicant {
 	
 	private String firstName = null;
@@ -123,13 +122,9 @@ public class JobApplicant {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
 		lookupCityAndStateFromZip(zipCode);
-		save();
 	}
 	
-	private void save() {
-		//TODO save information to a database
-		System.out.println("Saving to database: " + formatLastNameFirst());
-	}
+
 	
 	public static void main(String[] args) throws URISyntaxException, IOException {
 		JobApplicant jobApplicant = new JobApplicant();
@@ -161,7 +156,9 @@ public class JobApplicant {
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
             jobApplicant.lookupCityAndStateFromZip(zipCode);
-            jobApplicant.save();
+            
+            PersistanceLayer persistance = new PersistanceLayer();
+            persistance.save(jobApplicant);
 		}
 	}
 	
