@@ -155,27 +155,27 @@ public class JobApplicant {
 		while (!done) {
 			System.out.println("Please enter info about a job candidate or 'quit' to quit");
 			System.out.println("First name?");
-            firstName = scanner.nextLine();		
-            if (firstName.equals("quit")) {
-            	scanner.close();
-            	System.out.println("Bye-bye!");
-            	done = true;
-            	break;
-            }
+			firstName = scanner.nextLine();
+			if (firstName.equals("quit")) {
+				scanner.close();
+				System.out.println("Bye-bye!");
+				done = true;
+				break;
+			}
 			System.out.println("Middle name?");
-            middleName = scanner.nextLine();
+			middleName = scanner.nextLine();
 			System.out.println("Last name?");
-            lastName = scanner.nextLine();			
+			lastName = scanner.nextLine();
 			System.out.println("SSN?");
-            ssn = scanner.nextLine();			
+			ssn = scanner.nextLine();
 			System.out.println("Zip Code?");
-            zipCode = scanner.nextLine();			
-            jobApplicant.setName(firstName, middleName, lastName);          
-            jobApplicant.setSsn(ssn);
-            jobApplicant.lookupCityAndState(zipCode);
-            
-            PersistanceLayer persistance = new PersistanceLayer();
-            persistance.save(jobApplicant);
+			zipCode = scanner.nextLine();
+			jobApplicant.setName(firstName, middleName, lastName);
+			jobApplicant.setSsn(ssn);
+			jobApplicant.lookupCityAndState(zipCode);
+
+			PersistanceLayer persistance = new PersistanceLayer();
+			persistance.save(jobApplicant);
 		}
 	}
 	
