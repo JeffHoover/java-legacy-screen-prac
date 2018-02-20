@@ -85,10 +85,10 @@ public class JobApplicant {
 		if ( "000".equals(ssn.substring(0,3)) || 
 			 "666".equals(ssn.substring(0,3)) ||
 			 "9".equals(ssn.substring(0,1)) ) {
-			return SSN_BAD_START;
+			return SSN_BAD_AREA_NAME;
 		}
 		if ( "0000".equals(ssn.substring(5)) ) {
-			return SSN_ZEROS_IN_MIDDLE;
+			return SSN_BAD_SERIAL_NUMBER;
 		}
 		for (int i = 0 ; i < specialCases.length ; i++ ) {
 			if ( ssn.equals(specialCases[i]) ) {
