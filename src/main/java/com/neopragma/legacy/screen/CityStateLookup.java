@@ -19,9 +19,29 @@ public class CityStateLookup {
 
 	public void lookupCityAndState(String zipCode) throws URISyntaxException, IOException {
 
-		// Use a service to look up the city and state based on zip code.
-		// Save the returned city and state if content length is greater than zero.
-		URI uri = new URIBuilder()
+		URI cityStateLookupUri = buildCityStateSearchUri(zipCode);
+        HttpGet cityStateLookupRequest = new HttpGet(cityStateLookupUri);
+
+        // TODO:
+        // Add dependency injection and mock CloseableHttpClient and CloseableHttpResponse
+        // so that we can test what happens should the lookup service fail.
+        // Assignments to "" below are not currently covered by tests.
+
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+        	
+            CloseableHttpResponse cityStateLookupResponse = httpclient.execute(cityStateLookupRequest);
+            
+            if (cityStateLookupResponse.getEntity() != null) {
+              	extractCityAndStateUsingSideEffect(cityStateLookupResponse);
+            } else {
+            	city = "";
+            	state = "";
+            }
+        }
+	}
+
+	private URI buildCityStateSearchUri(String zipCode) throws URISyntaxException {
+		return new URIBuilder()
             .setScheme("http")
             .setHost("www.zip-codes.com")
             .setPath("/search.asp")
@@ -29,34 +49,20 @@ public class CityStateLookup {
             .setParameter("selectTab", "0")
             .setParameter("srch-type", "city")
             .build();
-        HttpGet request = new HttpGet(uri);
-
-        // TODO - Add dependency injection and mock CloseableHttpClient and CloseableHttpResponse
-        // so that we can test what happens should the lookup service fail
-
-        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            CloseableHttpResponse cityStateLookupResponse = httpclient.execute(request);
-            if (cityStateLookupResponse.getEntity() != null) {
-              	extractCityAndStateUsingSideEffect(cityStateLookupResponse);
-            } else {
-            	city = ""; // TODO - Not covered by a test - see above
-            	state = "";
-            }
-        }
 	}
 
 	private void extractCityAndStateUsingSideEffect(CloseableHttpResponse cityStateLookupResponse) throws IOException {
-		StringBuilder result = extractHtml(cityStateLookupResponse);
+		StringBuilder cityStateLookupResult = extractHtml(cityStateLookupResponse);
 		
-        int metaOffset = result.indexOf("<meta ");
-		int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
+        int metaOffset = cityStateLookupResult.indexOf("<meta ");
+		int contentOffset = cityStateLookupResult.indexOf(" content=\"Zip Code ", metaOffset);
 		contentOffset += 19;
-		contentOffset = result.indexOf(" - ", contentOffset);
+		contentOffset = cityStateLookupResult.indexOf(" - ", contentOffset);
 		contentOffset += 3;
-		int stateOffset = result.indexOf(" ", contentOffset);
-		city = result.substring(contentOffset, stateOffset);
+		int stateOffset = cityStateLookupResult.indexOf(" ", contentOffset);
+		city = cityStateLookupResult.substring(contentOffset, stateOffset);
 		stateOffset += 1;
-		state = result.substring(stateOffset, stateOffset+2);
+		state = cityStateLookupResult.substring(stateOffset, stateOffset+2);
 	}
 
 	private StringBuilder extractHtml(CloseableHttpResponse response) throws IOException {
@@ -77,6 +83,5 @@ public class CityStateLookup {
 	public String getState() {
 		return state;
 	}
-
 	
 }

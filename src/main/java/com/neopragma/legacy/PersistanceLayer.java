@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen.integration;
+package com.neopragma.legacy;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
