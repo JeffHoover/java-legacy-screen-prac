@@ -79,23 +79,42 @@ public class JobApplicant {
 	}
 
 	public ErrorCode validateSsn() {
-		if ( !ssn.matches("\\d{9}") ) {
+		if ( ssnFailsRegex() ) {
 			return SSN_REGEX_FAIL;
 		}
-		if ( "000".equals(ssn.substring(0,3)) || 
-			 "666".equals(ssn.substring(0,3)) ||
-			 "9".equals(ssn.substring(0,1)) ) {
+		if ( ssnHasBadAreaName() ) {
 			return SSN_BAD_AREA_NAME;
 		}
-		if ( "0000".equals(ssn.substring(5)) ) {
+		if ( ssnHasBadSerialNumber() ) {
 			return SSN_BAD_SERIAL_NUMBER;
 		}
-		for (int i = 0 ; i < specialCases.length ; i++ ) {
-			if ( ssn.equals(specialCases[i]) ) {
+		if (ssnIsSpecialCase()) {
 				return SSN_SPECIAL_CASE;
-			}
 		}
 		return SUCCESS;
+	}
+
+	private boolean ssnFailsRegex() {
+		return !ssn.matches("\\d{9}");
+	}
+	
+	private boolean ssnIsSpecialCase() {
+		for (int i = 0 ; i < specialCases.length ; i++ ) {
+			if ( ssn.equals(specialCases[i]) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean ssnHasBadSerialNumber() {
+		return "0000".equals(ssn.substring(5));
+	}
+
+	private boolean ssnHasBadAreaName() {
+		return "000".equals(ssn.substring(0,3)) || 
+			 "666".equals(ssn.substring(0,3)) ||
+			 "9".equals(ssn.substring(0,1));
 	}
 
 	public void lookupCityAndState(String zipCode) throws URISyntaxException, IOException {
@@ -124,8 +143,6 @@ public class JobApplicant {
 		setSsn(ssn);
 		lookupCityAndState(zipCode);
 	}
-	
-
 	
 	public static void main(String[] args) throws URISyntaxException, IOException {
 		JobApplicant jobApplicant = new JobApplicant();
