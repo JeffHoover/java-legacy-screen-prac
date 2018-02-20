@@ -1,5 +1,6 @@
 package com.neopragma.legacy.screen.integration;
 
+import static com.neopragma.legacy.screen.ErrorCode.SUCCESS;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -35,13 +36,13 @@ public class JobApplicantIntegrationTest {
 	@Test
 	public void addsApplicant() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
-		assertEquals(0, jobApplicant.validateName());
+		assertEquals(SUCCESS, jobApplicant.validateName());
 	}
 
 	@Test
 	public void addsSSN() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
-		assertEquals(0, jobApplicant.validateSsn());
+		assertEquals(SUCCESS, jobApplicant.validateSsn());
 	}
 
 	@Test
