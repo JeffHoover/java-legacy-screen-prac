@@ -14,9 +14,12 @@ public class PersistanceLayer {
 
 	public JobApplicant get(String ssn) throws URISyntaxException, IOException {
 		
-		JobApplicant temporaryUser = new JobApplicant();
-		temporaryUser.add("Jeff", "", "Hoover", ssn, "02134");
-		
-		return temporaryUser;
+		return temporarilyCreateBogusApplicant(ssn);
+	}
+
+	private JobApplicant temporarilyCreateBogusApplicant(String ssn) throws URISyntaxException, IOException {
+		JobApplicant bogusApplicantThatWouldOtherwiseBeFetched = new JobApplicant();
+		bogusApplicantThatWouldOtherwiseBeFetched.add("Jeff", "", "Hoover", ssn, "02134");
+		return bogusApplicantThatWouldOtherwiseBeFetched;
 	}
 }
