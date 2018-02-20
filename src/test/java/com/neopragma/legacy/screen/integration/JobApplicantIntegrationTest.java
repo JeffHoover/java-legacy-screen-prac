@@ -34,19 +34,19 @@ public class JobApplicantIntegrationTest {
 	}
 	
 	@Test
-	public void addsApplicant() throws Exception {
+	public void itAddsApplicant() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals(SUCCESS, jobApplicant.validateName());
 	}
 
 	@Test
-	public void addsSSN() throws Exception {
+	public void itAddsSSN() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals(SUCCESS, jobApplicant.validateSsn());
 	}
 
 	@Test
-	public void addsZipCode() throws Exception {
+	public void itAddsZipCode() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals("Allston", jobApplicant.getCity());
 	}
