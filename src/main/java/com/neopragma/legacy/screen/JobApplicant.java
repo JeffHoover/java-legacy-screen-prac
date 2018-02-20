@@ -98,7 +98,7 @@ public class JobApplicant {
 		return SUCCESS;
 	}
 
-	public void lookupCityAndStateFromZip(String zipCode) throws URISyntaxException, IOException {
+	public void lookupCityAndState(String zipCode) throws URISyntaxException, IOException {
         
 		CityStateLookup lookup = new CityStateLookup();
         
@@ -122,7 +122,7 @@ public class JobApplicant {
 			       String zipCode) throws URISyntaxException, IOException {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
-		lookupCityAndStateFromZip(zipCode);
+		lookupCityAndState(zipCode);
 	}
 	
 
@@ -156,7 +156,7 @@ public class JobApplicant {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.lookupCityAndStateFromZip(zipCode);
+            jobApplicant.lookupCityAndState(zipCode);
             
             PersistanceLayer persistance = new PersistanceLayer();
             persistance.save(jobApplicant);

@@ -21,14 +21,14 @@ public class JobApplicantIntegrationTest {
 
 	@Test
 	public void itFindsAddisonTexasBy5DigitZipCode() throws URISyntaxException, IOException {
-		jobApplicant.lookupCityAndStateFromZip("75001");
+		jobApplicant.lookupCityAndState("75001");
 		assertEquals("Addison", jobApplicant.getCity());
 		assertEquals("TX", jobApplicant.getState());
 	}
 
 	@Test
 	public void itFindsMaranaArizonaBy9DigitZipCode() throws URISyntaxException, IOException {
-		jobApplicant.lookupCityAndStateFromZip("856585578");
+		jobApplicant.lookupCityAndState("856585578");
 		assertEquals("Marana", jobApplicant.getCity());
 		assertEquals("AZ", jobApplicant.getState());
 	}
