@@ -1,4 +1,4 @@
-package com.neopragma.legacy.screen.integration;
+package com.neopragma.legacy;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 
 import org.junit.Test;
 
+import com.neopragma.legacy.PersistanceLayer;
 import com.neopragma.legacy.screen.JobApplicant;
 
 public class PersistanceLayerTest {

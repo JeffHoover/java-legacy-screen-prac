@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
-import com.neopragma.legacy.screen.integration.PersistanceLayer;
+import com.neopragma.legacy.PersistanceLayer;
 
 public class JobApplicant {
 	

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.neopragma.legacy.screen.CityStateLookup;
 
-public class CityStateLookupTest {
+public class CityStateLookupIntegrationTest {
 
 	@Test
 	public void doesLookupCity() throws ClientProtocolException, URISyntaxException, IOException  {
