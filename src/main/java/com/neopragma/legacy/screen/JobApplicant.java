@@ -123,9 +123,9 @@ public class JobApplicant {
             .setParameter("srch-type", "city")
             .build();
         HttpGet request = new HttpGet(uri);
-        CloseableHttpClient httpclient = HttpClients.createDefault();
-        CloseableHttpResponse response = httpclient.execute(request);
-        try {
+        try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+            CloseableHttpResponse response = httpclient.execute(request);
+
             HttpEntity entity = response.getEntity();
             if (entity != null) {
               	BufferedReader rd = new BufferedReader(
@@ -148,8 +148,6 @@ public class JobApplicant {
             	city = "";
             	state = "";
             }
-        } finally {
-            response.close();
         }
 	}
 
