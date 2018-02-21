@@ -34,6 +34,16 @@ public class SsnUtilitiesTest {
 	}
 
 	@Test
+	public void returnsEmptyIfWrongDashes() {
+		assertEquals("", ssnUtilities.handleDashes("1-------9"));
+	}
+	
+	@Test
+	public void returnsSsnIfNoDashes() {
+		assertEquals("123456789", ssnUtilities.handleDashes("123456789"));
+	}
+	
+	@Test
 	public void validSsnWithDashes() {
 		assertEquals(SUCCESS, ssnUtilities.validate("123-45-6789"));
 	}
