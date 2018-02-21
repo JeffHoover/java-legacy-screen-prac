@@ -17,17 +17,6 @@ public class CityStateLookup {
 
 	private String city;
 	private String state;
-
-	private URI buildCityStateLookupUri(String zipCode) throws URISyntaxException {
-		return new URIBuilder()
-            .setScheme("http")
-            .setHost("www.zip-codes.com")
-            .setPath("/search.asp")
-            .setParameter("fld-zip", zipCode)
-            .setParameter("selectTab", "0")
-            .setParameter("srch-type", "city")
-            .build();
-	}
 	
 	public void lookup(String zipCode) throws URISyntaxException, IOException {
 		// Save the returned city and state if content length is greater than zero.
@@ -68,5 +57,15 @@ public class CityStateLookup {
 	public String getState() {
 		return state;
 	}
-
+	
+	private URI buildCityStateLookupUri(String zipCode) throws URISyntaxException {
+		return new URIBuilder()
+            .setScheme("http")
+            .setHost("www.zip-codes.com")
+            .setPath("/search.asp")
+            .setParameter("fld-zip", zipCode)
+            .setParameter("selectTab", "0")
+            .setParameter("srch-type", "city")
+            .build();
+	}
 }
