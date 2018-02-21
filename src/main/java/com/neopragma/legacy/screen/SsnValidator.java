@@ -30,6 +30,15 @@ public class SsnValidator {
 		return SUCCESS;
 	}
 
+	public String formatSsn(String ssn) {
+		StringBuilder sb = new StringBuilder(ssn.substring(0,3));
+		sb.append("-");
+		sb.append(ssn.substring(3,5));
+		sb.append("-");
+		sb.append(ssn.substring(5));
+		return sb.toString();
+	}
+	
 	private boolean ssnFailsRegex(String ssn) {
 		return !ssn.matches("\\d{9}");
 	}
@@ -52,4 +61,5 @@ public class SsnValidator {
 			 "666".equals(ssn.substring(0,3)) ||
 			 "9".equals(ssn.substring(0,1));
 	}
+
 }

@@ -20,6 +20,8 @@ public class JobApplicant {
 	private String state;
 	private String ssn;
 	
+	SsnValidator ssnValidator = new SsnValidator();
+	
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
 		this.middleName = middleName == null ? "" : middleName;
@@ -66,17 +68,11 @@ public class JobApplicant {
 		}    
 	}
 	
-	public String formatSsn() {
-		StringBuilder sb = new StringBuilder(ssn.substring(0,3));
-		sb.append("-");
-		sb.append(ssn.substring(3,5));
-		sb.append("-");
-		sb.append(ssn.substring(5));
-		return sb.toString();
+	public String formattedSsn() {
+		return ssnValidator.formatSsn(ssn);
 	}
 
 	public ErrorCode validateSsn() {
-		SsnValidator ssnValidator = new SsnValidator();
 		return ssnValidator.validate(ssn);
 	}
 
