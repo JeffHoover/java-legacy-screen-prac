@@ -3,6 +3,9 @@ package com.neopragma.legacy.screen;
 import static com.neopragma.legacy.ErrorCode.*;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -163,6 +166,14 @@ public class JobApplicantTest {
 	public void itRejectsSsn219099999() {
 		jobApplicant.setSsn("219099999");
 		assertEquals(SSN_SPECIAL_CASE, jobApplicant.validateSsn());
+	}
+
+	@Test
+	public void itCurrentlyGivesWeirdResultForInvalidZip() throws URISyntaxException, IOException {
+		String invalidZipCode = "1";
+		jobApplicant.add("Jeff", "", "Hoover", "123456789", invalidZipCode);
+		assertEquals("Facts", jobApplicant.getCity());
+		assertEquals("& ", jobApplicant.getState());
 	}
 
 }
