@@ -60,7 +60,6 @@ public class JobApplicant {
 	    "219099999", "078051120"
 	};
 	
-	private String zipCode;    
 	private String city;
 	private String state;
 
