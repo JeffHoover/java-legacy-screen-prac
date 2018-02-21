@@ -7,9 +7,6 @@ import java.util.Scanner;
 import com.neopragma.legacy.CityStateLookup;
 import com.neopragma.legacy.integration.PersistenceLayer;
 
-/**
- * Job applicant class.
- */
 public class JobApplicant {
 	
 	private String firstName = null;
