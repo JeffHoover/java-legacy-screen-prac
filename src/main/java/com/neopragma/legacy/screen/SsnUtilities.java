@@ -7,7 +7,7 @@ import static com.neopragma.legacy.ErrorCode.SUCCESS;
 
 import com.neopragma.legacy.ErrorCode;
 
-public class SsnValidator {
+public class SsnUtilities {
 	
 	private String[] specialCases = new String[] {
 	    "219099999", "078051120"
@@ -37,6 +37,10 @@ public class SsnValidator {
 		sb.append("-");
 		sb.append(ssn.substring(5));
 		return sb.toString();
+	}
+	
+	public boolean ssnHasCorrectDashes(String ssn) {
+		return ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})");
 	}
 	
 	private boolean ssnFailsRegex(String ssn) {

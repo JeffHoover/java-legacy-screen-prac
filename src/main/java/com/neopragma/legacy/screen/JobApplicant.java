@@ -20,7 +20,7 @@ public class JobApplicant {
 	private String state;
 	private String ssn;
 	
-	SsnValidator ssnValidator = new SsnValidator();
+	SsnUtilities ssnUtilities = new SsnUtilities();
 	
 	public void setName(String firstName, String middleName, String lastName) {
 		this.firstName = firstName == null ? "" : firstName;
@@ -61,7 +61,7 @@ public class JobApplicant {
 	}
 
 	public void setSsn(String ssn) {
-		if ( ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})") ) {
+		if ( ssnUtilities.ssnHasCorrectDashes(ssn) ) {
   		    this.ssn = ssn.replaceAll("-", "");
 		} else {
   		    this.ssn = "";
@@ -69,11 +69,11 @@ public class JobApplicant {
 	}
 	
 	public String formattedSsn() {
-		return ssnValidator.formatSsn(ssn);
+		return ssnUtilities.formatSsn(ssn);
 	}
 
 	public ErrorCode validateSsn() {
-		return ssnValidator.validate(ssn);
+		return ssnUtilities.validate(ssn);
 	}
 
 	public void lookupCityState(String zipCode) throws URISyntaxException, IOException {
