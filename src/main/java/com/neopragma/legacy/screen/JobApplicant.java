@@ -83,23 +83,43 @@ public class JobApplicant {
 	}
 
 	public ErrorCode validateSsn() {
-		if ( !ssn.matches("\\d{9}") ) {
+		if (ssnFailsRegex()) {
 			return SSN_REGEX_FAIL;
 		}
-		if ( "000".equals(ssn.substring(0,3)) || 
-			 "666".equals(ssn.substring(0,3)) ||
-			 "9".equals(ssn.substring(0,1)) ) {
+		if (ssnHasBadAreaName() ) {
 			return ErrorCode.SSN_BAD_AREA_NAME;
 		}
-		if ( "0000".equals(ssn.substring(5)) ) {
+		if (ssnHasBadSerialNumber() ) {
 			return SSN_BAD_SERIAL_NUMBER;
 		}
+		if (ssnMatchesSpecialCase()) {
+			return SSN_SPECIAL_CASE;
+		}
+
+		return SUCCESS;
+	}
+
+	private boolean ssnFailsRegex() {
+		return !ssn.matches("\\d{9}");
+	}
+
+	private boolean ssnMatchesSpecialCase() {
 		for (int i = 0 ; i < specialCases.length ; i++ ) {
 			if ( ssn.equals(specialCases[i]) ) {
-				return SSN_SPECIAL_CASE;
+				return true;
 			}
 		}
-		return SUCCESS;
+		return false;
+	}
+
+	private boolean ssnHasBadSerialNumber() {
+		return "0000".equals(ssn.substring(5));
+	}
+
+	private boolean ssnHasBadAreaName() {
+		return "000".equals(ssn.substring(0,3)) || 
+			 "666".equals(ssn.substring(0,3)) ||
+			 "9".equals(ssn.substring(0,1));
 	}
 
 	public void lookupCityState(String zipCode) throws URISyntaxException, IOException {
