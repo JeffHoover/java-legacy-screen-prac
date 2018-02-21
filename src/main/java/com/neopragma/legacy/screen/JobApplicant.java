@@ -1,9 +1,6 @@
 package com.neopragma.legacy.screen;
 
 import static com.neopragma.legacy.ErrorCode.INVALID_NAME;
-import static com.neopragma.legacy.ErrorCode.SSN_BAD_SERIAL_NUMBER;
-import static com.neopragma.legacy.ErrorCode.SSN_REGEX_FAIL;
-import static com.neopragma.legacy.ErrorCode.SSN_SPECIAL_CASE;
 import static com.neopragma.legacy.ErrorCode.SUCCESS;
 
 import java.io.IOException;
@@ -60,10 +57,6 @@ public class JobApplicant {
 			return INVALID_NAME;
 		}
 	}
-	
-	private String[] specialCases = new String[] {
-	    "219099999", "078051120"
-	};
 
 	public void setSsn(String ssn) {
 		if ( ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})") ) {
@@ -83,43 +76,8 @@ public class JobApplicant {
 	}
 
 	public ErrorCode validateSsn() {
-		if (ssnFailsRegex()) {
-			return SSN_REGEX_FAIL;
-		}
-		if (ssnHasBadAreaName() ) {
-			return ErrorCode.SSN_BAD_AREA_NAME;
-		}
-		if (ssnHasBadSerialNumber() ) {
-			return SSN_BAD_SERIAL_NUMBER;
-		}
-		if (ssnMatchesSpecialCase()) {
-			return SSN_SPECIAL_CASE;
-		}
-
-		return SUCCESS;
-	}
-
-	private boolean ssnFailsRegex() {
-		return !ssn.matches("\\d{9}");
-	}
-
-	private boolean ssnMatchesSpecialCase() {
-		for (int i = 0 ; i < specialCases.length ; i++ ) {
-			if ( ssn.equals(specialCases[i]) ) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean ssnHasBadSerialNumber() {
-		return "0000".equals(ssn.substring(5));
-	}
-
-	private boolean ssnHasBadAreaName() {
-		return "000".equals(ssn.substring(0,3)) || 
-			 "666".equals(ssn.substring(0,3)) ||
-			 "9".equals(ssn.substring(0,1));
+		SsnValidator ssnValidator = new SsnValidator();
+		return ssnValidator.validate(ssn);
 	}
 
 	public void lookupCityState(String zipCode) throws URISyntaxException, IOException {
