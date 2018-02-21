@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.neopragma.legacy.screen.JobApplicant;
 
-public class JobApplicantTest {
+public class JobApplicantIntegrationTest {
 
 	private JobApplicant jobApplicant;
 	
