@@ -30,9 +30,15 @@ public class JobApplicantTest {
 	}
 	
 	@Test
-	public void addsApplicant() throws Exception {
+	public void addsApplicantName() throws Exception {
 		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
 		assertEquals(0, jobApplicant.validateName());
+	}
+	
+	@Test
+	public void addsSSN() throws Exception {
+		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
+		assertEquals(0, jobApplicant.validateSsn());
 	}
 	
 	@Test
