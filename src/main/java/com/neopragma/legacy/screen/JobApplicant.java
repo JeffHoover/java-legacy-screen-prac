@@ -114,15 +114,8 @@ public class JobApplicant {
 		this.zipCode = zipCode;
 		// Use a service to look up the city and state based on zip code.
 		// Save the returned city and state if content length is greater than zero.
-		URI uri = new URIBuilder()
-            .setScheme("http")
-            .setHost("www.zip-codes.com")
-            .setPath("/search.asp")
-            .setParameter("fld-zip", this.zipCode)
-            .setParameter("selectTab", "0")
-            .setParameter("srch-type", "city")
-            .build();
-        HttpGet request = new HttpGet(uri);
+		URI cityStateLookupUri = buildCityStateLookupUri(this.zipCode);
+        HttpGet request = new HttpGet(cityStateLookupUri);
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse response = httpclient.execute(request);
 
@@ -149,6 +142,17 @@ public class JobApplicant {
             	state = "";
             }
         }
+	}
+
+	private URI buildCityStateLookupUri(String zipCode) throws URISyntaxException {
+		return new URIBuilder()
+            .setScheme("http")
+            .setHost("www.zip-codes.com")
+            .setPath("/search.asp")
+            .setParameter("fld-zip", zipCode)
+            .setParameter("selectTab", "0")
+            .setParameter("srch-type", "city")
+            .build();
 	}
 
 	public String getCity() {
