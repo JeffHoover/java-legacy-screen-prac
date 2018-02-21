@@ -42,6 +42,12 @@ public class JobApplicantTest {
 	}
 	
 	@Test
+	public void addsZipCode() throws Exception {
+		jobApplicant.add("Jeff", "", "Hoover", "123456789", "02134");
+		assertEquals("Allston", jobApplicant.getCity());
+	}
+	
+	@Test
 	public void completeNameProvided() {
 		jobApplicant.setName("First", "Middle", "Last");
 		assertEquals(0, jobApplicant.validateName());
