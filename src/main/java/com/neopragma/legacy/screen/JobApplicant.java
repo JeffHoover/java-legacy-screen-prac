@@ -9,10 +9,9 @@ import com.neopragma.legacy.integration.PersistenceLayer;
 
 public class JobApplicant {
 	
-	private String firstName = null;
-	private String middleName = null;
-	private String lastName = null;
-	
+	private String firstName;
+	private String middleName;
+	private String lastName;
 	private String city;
 	private String state;
 	private String ssn;
