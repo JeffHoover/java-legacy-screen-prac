@@ -1,10 +1,17 @@
 package com.neopragma.legacy.screen;
 
+import static com.neopragma.legacy.ErrorCode.INVALID_NAME;
+import static com.neopragma.legacy.ErrorCode.SSN_BAD_SERIAL_NUMBER;
+import static com.neopragma.legacy.ErrorCode.SSN_REGEX_FAIL;
+import static com.neopragma.legacy.ErrorCode.SSN_SPECIAL_CASE;
+import static com.neopragma.legacy.ErrorCode.SUCCESS;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
 import com.neopragma.legacy.CityStateLookup;
+import com.neopragma.legacy.ErrorCode;
 import com.neopragma.legacy.integration.PersistenceLayer;
 
 public class JobApplicant {
@@ -46,11 +53,11 @@ public class JobApplicant {
 		return sb.toString();
 	}
 	
-	public int validateName() {
+	public ErrorCode validateName() {
 		if ( firstName.length() > 0 && lastName.length() > 0 ) {
-			return 0;
+			return SUCCESS;
 		} else {
-			return 6;
+			return INVALID_NAME;
 		}
 	}
 	
@@ -75,24 +82,24 @@ public class JobApplicant {
 		return sb.toString();
 	}
 
-	public int validateSsn() {
+	public ErrorCode validateSsn() {
 		if ( !ssn.matches("\\d{9}") ) {
-			return 1;
+			return SSN_REGEX_FAIL;
 		}
 		if ( "000".equals(ssn.substring(0,3)) || 
 			 "666".equals(ssn.substring(0,3)) ||
 			 "9".equals(ssn.substring(0,1)) ) {
-			return 2;
+			return ErrorCode.SSN_BAD_AREA_NAME;
 		}
 		if ( "0000".equals(ssn.substring(5)) ) {
-			return 3;
+			return SSN_BAD_SERIAL_NUMBER;
 		}
 		for (int i = 0 ; i < specialCases.length ; i++ ) {
 			if ( ssn.equals(specialCases[i]) ) {
-				return 4;
+				return SSN_SPECIAL_CASE;
 			}
 		}
-		return 0;
+		return SUCCESS;
 	}
 
 	public void lookupCityState(String zipCode) throws URISyntaxException, IOException {
@@ -154,5 +161,4 @@ public class JobApplicant {
             persistanceLayer.save(jobApplicant);
 		}
 	}
-	
 }
