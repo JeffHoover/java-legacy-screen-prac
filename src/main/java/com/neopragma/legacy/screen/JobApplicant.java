@@ -53,10 +53,10 @@ public class JobApplicant {
 	}
 	
 	public ErrorCode validateName() {
-		if ( firstName.length() > 0 && lastName.length() > 0 ) {
-			return SUCCESS;
-		} else {
+		if ( firstName.isEmpty() || lastName.isEmpty() ) {
 			return INVALID_NAME;
+		} else {
+			return SUCCESS;
 		}
 	}
 
