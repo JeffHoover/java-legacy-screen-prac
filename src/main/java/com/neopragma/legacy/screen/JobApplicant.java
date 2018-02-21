@@ -115,14 +115,14 @@ public class JobApplicant {
 		// Use a service to look up the city and state based on zip code.
 		// Save the returned city and state if content length is greater than zero.
 		URI cityStateLookupUri = buildCityStateLookupUri(this.zipCode);
-        HttpGet request = new HttpGet(cityStateLookupUri);
+        HttpGet cityStateLookupRequest = new HttpGet(cityStateLookupUri);
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-            CloseableHttpResponse response = httpclient.execute(request);
+            CloseableHttpResponse cityStateLookupResponse = httpclient.execute(cityStateLookupRequest);
 
-            HttpEntity entity = response.getEntity();
+            HttpEntity entity = cityStateLookupResponse.getEntity();
             if (entity != null) {
               	BufferedReader rd = new BufferedReader(
-                        new InputStreamReader(response.getEntity().getContent()));
+                        new InputStreamReader(cityStateLookupResponse.getEntity().getContent()));
            		StringBuilder result = new StringBuilder();
            		String line = "";
            		while ((line = rd.readLine()) != null) {
