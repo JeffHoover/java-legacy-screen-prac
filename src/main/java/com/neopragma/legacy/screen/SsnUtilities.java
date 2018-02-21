@@ -49,8 +49,8 @@ public class SsnUtilities {
 		sb.append(ssn.substring(5));
 		return sb.toString();
 	}
-	
-	public boolean ssnHasCorrectDashes(String ssn) {
+
+	private boolean ssnHasCorrectDashes(String ssn) {
 		return ssn.matches("(\\d{3}-\\d{2}-\\d{4}|\\d{9})");
 	}
 	
