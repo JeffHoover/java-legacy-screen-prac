@@ -61,11 +61,7 @@ public class JobApplicant {
 	}
 
 	public void setSsn(String ssn) {
-		if ( ssnUtilities.ssnHasCorrectDashes(ssn) ) {
-  		    this.ssn = ssn.replaceAll("-", "");
-		} else {
-  		    this.ssn = "";
-		}    
+		this.ssn = ssnUtilities.handleDashes(ssn);
 	}
 	
 	public String formattedSsn() {

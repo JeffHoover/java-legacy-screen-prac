@@ -13,7 +13,18 @@ public class SsnUtilities {
 	    "219099999", "078051120"
 	};
 	
+	public String handleDashes(String ssn) {
+		if ( ssnHasCorrectDashes(ssn) ) {
+  		    ssn = ssn.replaceAll("-", "");
+		} else {
+  		    ssn = "";
+		}
+		return ssn;
+	}
+	
 	public ErrorCode validate(String ssn) {
+		ssn = handleDashes(ssn);
+		
 		if (ssnFailsRegex(ssn)) {
 			return SSN_REGEX_FAIL;
 		}
