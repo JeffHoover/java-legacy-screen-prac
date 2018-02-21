@@ -14,6 +14,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import com.neopragma.legacy.integration.PersistenceLayer;
+
 /**
  * Job applicant class.
  */
@@ -168,12 +170,6 @@ public class JobApplicant {
 		setName(firstName, middleName, lastName);
 		setSsn(ssn);
 		setZipCode(zipCode);
-		save();
-	}
-	
-	private void save() {
-		//TODO save information to a database
-		System.out.println("Saving to database: " + formatLastNameFirst());
 	}
 	
 	public static void main(String[] args) throws URISyntaxException, IOException {
@@ -206,7 +202,8 @@ public class JobApplicant {
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
             jobApplicant.setZipCode(zipCode);
-            jobApplicant.save();
+            PersistenceLayer persistanceLayer = new PersistenceLayer();
+            persistanceLayer.save(jobApplicant);
 		}
 	}
 	

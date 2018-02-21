@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.neopragma.legacy.screen.JobApplicant;
 
-public class PersistanceLayerTest {
+public class PersistenceLayerTest {
 	
 	@Test
 	public void saveApplicant() throws URISyntaxException, IOException {
@@ -17,7 +17,7 @@ public class PersistanceLayerTest {
 		String ssn = "123456789";
 		jobApplicant.add("Jeff", "", "Hoover", ssn, "02134");
 		
-		PersistanceLayer persistance = new PersistanceLayer();
+		PersistenceLayer persistance = new PersistenceLayer();
 		persistance.save(jobApplicant);
 		
 		assertEquals("NY", persistance.get(ssn).getState());

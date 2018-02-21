@@ -5,9 +5,13 @@ import java.net.URISyntaxException;
 
 import com.neopragma.legacy.screen.JobApplicant;
 
-public class PersistanceLayer {
-
+/*
+ * A dummy generic persistence layer to be fleshed out later.
+ */
+public class PersistenceLayer {
+	
 	public void save(JobApplicant jobApplicant) {
+		System.out.println("Saving to database: " + jobApplicant.formatLastNameFirst());
 	}
 
 	public JobApplicant get(String zip) throws URISyntaxException, IOException {
