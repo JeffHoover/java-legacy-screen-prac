@@ -128,7 +128,6 @@ public class JobApplicant {
         try {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                long len = entity.getContentLength();
               	BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
            		StringBuffer result = new StringBuffer();
