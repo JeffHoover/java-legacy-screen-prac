@@ -29,7 +29,7 @@ public class CityStateLookup {
             .build();
 	}
 	
-	public void lookupCityState(String zipCode) throws URISyntaxException, IOException {
+	public void lookup(String zipCode) throws URISyntaxException, IOException {
 		// Save the returned city and state if content length is greater than zero.
 		URI cityStateLookupUri = buildCityStateLookupUri(zipCode);
         HttpGet cityStateLookupRequest = new HttpGet(cityStateLookupUri);
