@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
@@ -111,10 +112,12 @@ public class JobApplicant {
 	}
 
 	public void setZipCode(String zipCode) throws URISyntaxException, IOException {
-		this.zipCode = zipCode;
-		// Use a service to look up the city and state based on zip code.
+		lookupCityState(zipCode);
+	}
+
+	private void lookupCityState(String zipCode) throws URISyntaxException, IOException {
 		// Save the returned city and state if content length is greater than zero.
-		URI cityStateLookupUri = buildCityStateLookupUri(this.zipCode);
+		URI cityStateLookupUri = buildCityStateLookupUri(zipCode);
         HttpGet cityStateLookupRequest = new HttpGet(cityStateLookupUri);
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             CloseableHttpResponse cityStateLookupResponse = httpclient.execute(cityStateLookupRequest);
