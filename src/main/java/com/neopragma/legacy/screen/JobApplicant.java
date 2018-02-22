@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import com.neopragma.legacy.CityStateLookup;
 import com.neopragma.legacy.ErrorCode;
-import com.neopragma.legacy.integration.PersistenceLayer;
+import com.neopragma.legacy.PersistenceLayer;
 
 public class JobApplicant {
 	
