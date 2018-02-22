@@ -1,5 +1,6 @@
 package com.neopragma.legacy.screen;
 
+import static com.neopragma.legacy.ErrorCode.SSN_BAD_AREA_NAME;
 import static com.neopragma.legacy.ErrorCode.SSN_BAD_SERIAL_NUMBER;
 import static com.neopragma.legacy.ErrorCode.SSN_REGEX_FAIL;
 import static com.neopragma.legacy.ErrorCode.SSN_SPECIAL_CASE;
@@ -29,7 +30,7 @@ public class SsnUtilities {
 			return SSN_REGEX_FAIL;
 		}
 		if (ssnHasBadAreaName(ssn) ) {
-			return ErrorCode.SSN_BAD_AREA_NAME;
+			return SSN_BAD_AREA_NAME;
 		}
 		if (ssnHasBadSerialNumber(ssn) ) {
 			return SSN_BAD_SERIAL_NUMBER;
