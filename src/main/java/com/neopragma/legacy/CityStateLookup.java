@@ -50,7 +50,7 @@ public class CityStateLookup {
 	}
 
 	private StringBuilder extractHtml(CloseableHttpResponse cityStateLookupResponse)
-			throws IOException, UnsupportedOperationException {
+			throws IOException {
 		BufferedReader rd = new BufferedReader(
 		        new InputStreamReader(cityStateLookupResponse.getEntity().getContent()));
 		StringBuilder result = new StringBuilder();
