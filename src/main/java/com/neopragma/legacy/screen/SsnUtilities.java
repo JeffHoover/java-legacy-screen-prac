@@ -1,12 +1,10 @@
 package com.neopragma.legacy.screen;
 
-import static com.neopragma.legacy.ErrorCode.SSN_BAD_AREA_NAME;
-import static com.neopragma.legacy.ErrorCode.SSN_BAD_SERIAL_NUMBER;
-import static com.neopragma.legacy.ErrorCode.SSN_REGEX_FAIL;
-import static com.neopragma.legacy.ErrorCode.SSN_SPECIAL_CASE;
-import static com.neopragma.legacy.ErrorCode.SUCCESS;
-
-import com.neopragma.legacy.ErrorCode;
+import static com.neopragma.legacy.screen.ErrorCode.SSN_BAD_AREA_NAME;
+import static com.neopragma.legacy.screen.ErrorCode.SSN_BAD_SERIAL_NUMBER;
+import static com.neopragma.legacy.screen.ErrorCode.SSN_REGEX_FAIL;
+import static com.neopragma.legacy.screen.ErrorCode.SSN_SPECIAL_CASE;
+import static com.neopragma.legacy.screen.ErrorCode.SUCCESS;
 
 public class SsnUtilities {
 	

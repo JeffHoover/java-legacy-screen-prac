@@ -1,6 +1,6 @@
 package com.neopragma.legacy.screen;
 
-import static com.neopragma.legacy.ErrorCode.*;
+import static com.neopragma.legacy.screen.ErrorCode.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;

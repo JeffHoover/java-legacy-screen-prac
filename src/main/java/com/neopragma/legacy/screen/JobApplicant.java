@@ -1,15 +1,11 @@
 package com.neopragma.legacy.screen;
 
-import static com.neopragma.legacy.ErrorCode.INVALID_NAME;
-import static com.neopragma.legacy.ErrorCode.SUCCESS;
+import static com.neopragma.legacy.screen.ErrorCode.INVALID_NAME;
+import static com.neopragma.legacy.screen.ErrorCode.SUCCESS;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
-
-import com.neopragma.legacy.CityStateLookup;
-import com.neopragma.legacy.ErrorCode;
-import com.neopragma.legacy.PersistenceLayer;
 
 public class JobApplicant {
 	

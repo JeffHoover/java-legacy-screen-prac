@@ -1,10 +1,8 @@
-package com.neopragma.legacy;
+package com.neopragma.legacy.screen;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
-
-import com.neopragma.legacy.screen.JobApplicant;
 
 public class Main {
 	public static void main(String[] args) throws URISyntaxException, IOException {

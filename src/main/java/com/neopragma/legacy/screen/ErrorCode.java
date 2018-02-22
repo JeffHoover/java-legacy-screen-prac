@@ -1,4 +1,4 @@
-package com.neopragma.legacy;
+package com.neopragma.legacy.screen;
 
 public enum ErrorCode {
 	SUCCESS(0),

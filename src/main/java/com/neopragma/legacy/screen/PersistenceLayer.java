@@ -1,12 +1,10 @@
-package com.neopragma.legacy;
+package com.neopragma.legacy.screen;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import com.neopragma.legacy.screen.JobApplicant;
-
 /*
- * A dummy generic persistence layer to be fleshed out later.
+ * A dummy generic persistence layer for the purpose of the kata.
  */
 public class PersistenceLayer {
 	
