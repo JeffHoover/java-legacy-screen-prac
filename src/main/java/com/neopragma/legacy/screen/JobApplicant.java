@@ -5,7 +5,6 @@ import static com.neopragma.legacy.screen.ErrorCode.SUCCESS;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Scanner;
 
 public class JobApplicant {
 	
