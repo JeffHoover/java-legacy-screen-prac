@@ -27,27 +27,38 @@ public class CityStateLookup {
 
             HttpEntity entity = cityStateLookupResponse.getEntity();
             if (entity != null) {
-              	BufferedReader rd = new BufferedReader(
-                        new InputStreamReader(cityStateLookupResponse.getEntity().getContent()));
-           		StringBuilder result = new StringBuilder();
-           		String line = "";
-           		while ((line = rd.readLine()) != null) {
-           			result.append(line);
-       		    }
-                int metaOffset = result.indexOf("<meta ");
-                int contentOffset = result.indexOf(" content=\"Zip Code ", metaOffset);
-                contentOffset += 19;
-                contentOffset = result.indexOf(" - ", contentOffset);
-                contentOffset += 3;
-                int stateOffset = result.indexOf(" ", contentOffset);
-                city = result.substring(contentOffset, stateOffset);
-                stateOffset += 1;
-                state = result.substring(stateOffset, stateOffset+2);
+              	extractCityAndStateFromHtml(cityStateLookupResponse);
             } else {
             	city = "";
             	state = "";
             }
         }
+	}
+
+	private void extractCityAndStateFromHtml(CloseableHttpResponse cityStateLookupResponse)
+			throws IOException {
+		StringBuilder htmlFromLookupResponse = extractHtml(cityStateLookupResponse);
+		int metaOffset = htmlFromLookupResponse.indexOf("<meta ");
+		int contentOffset = htmlFromLookupResponse.indexOf(" content=\"Zip Code ", metaOffset);
+		contentOffset += 19;
+		contentOffset = htmlFromLookupResponse.indexOf(" - ", contentOffset);
+		contentOffset += 3;
+		int stateOffset = htmlFromLookupResponse.indexOf(" ", contentOffset);
+		city = htmlFromLookupResponse.substring(contentOffset, stateOffset);
+		stateOffset += 1;
+		state = htmlFromLookupResponse.substring(stateOffset, stateOffset+2);
+	}
+
+	private StringBuilder extractHtml(CloseableHttpResponse cityStateLookupResponse)
+			throws IOException, UnsupportedOperationException {
+		BufferedReader rd = new BufferedReader(
+		        new InputStreamReader(cityStateLookupResponse.getEntity().getContent()));
+		StringBuilder result = new StringBuilder();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		return result;
 	}
 
 	public String getCity() {
