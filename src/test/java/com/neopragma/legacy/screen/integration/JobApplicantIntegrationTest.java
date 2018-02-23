@@ -1,4 +1,4 @@
-package com.neopragma.legacy.integration;
+package com.neopragma.legacy.screen.integration;
 
 import static org.junit.Assert.assertEquals;
 
