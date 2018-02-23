@@ -34,7 +34,7 @@ public class Main {
             zipCode = scanner.nextLine();			
             jobApplicant.setName(firstName, middleName, lastName);          
             jobApplicant.setSsn(ssn);
-            jobApplicant.lookupCityState(zipCode);
+            jobApplicant.lookupCityAndState(zipCode);
             PersistenceLayer persistanceLayer = new PersistenceLayer();
             persistanceLayer.save(jobApplicant);
 		}

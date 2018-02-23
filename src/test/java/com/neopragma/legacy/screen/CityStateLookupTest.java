@@ -8,7 +8,7 @@ public class CityStateLookupTest {
 	@Test
 	public void lookupCityState() throws Exception {
 		CityStateLookup cityStateLookup = new CityStateLookup();
-		cityStateLookup.lookup("02134");
+		cityStateLookup.lookupCityAndState("02134");
 		
 		assertEquals("Allston", cityStateLookup.getCity());
 		assertEquals("MA", cityStateLookup.getState());

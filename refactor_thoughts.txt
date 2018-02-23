@@ -1,6 +1,10 @@
 Some thoughts about my kata:
 -------------------------------------
 
+The commit 'b70e39b' with the commit message 'merge' was the result of confusing two different copies of the repo on my local and trying to merge from github. It was after I updated package names and moved files around. The merge resulted in, among other minor things, the file PersistanceLayer.jave duplicated in two packages, and I mistakenly pushed it before running tests. As as result of these issues, the project will not build at that commit.
+I fixed the issue on the next commit.
+
+
 CityStateLookup is not what I would like. The lines:
             	city = "";
             	state = "";
