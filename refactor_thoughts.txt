@@ -6,15 +6,15 @@ CityStateLookup is not what I would like. The lines:
             	state = "";
 aren't covered by a test, because I'm not going to take the time right now to inject the CloseableHttpClient to be able to mock it. Also, I'd probably also find another zip code lookup service, one that had a REST API so that we no longer have to maintain the ugly code that parses the HTML.
 
-
 I considered splitting my ErrorCode class. It would be good to have just SNN codes together in an Enum, but then I'd be left an almost degenerate Enum to hold INVALID_NAME. So, for now, I'm leaving it.
-
 
 I pulled main() out of JobApplicant, where it doesn't belong. I did not put tests around main() as I'm treating it as a consumer of the JobApplicant and related classes and not really part of the project. Since it doesn't have even a characterization test, I did not refactor it (for instance, the field 'done' is not needed).
 
-
 I nearly deleted JobApplicant.addsSSN() and other passthroughs of the SsnUtilities class, as they are only called by tests, never by any implementation code. But I kept them because I don't know if we have contracts with any code outside of the kata's. I'd want to talk to stakeholders to see if anyone is expecting to call us and, if not, JobApplicant can be made even smaller.
 
-
 I made a dummy PersistenceLayer class since I didn't want the save operation inside JobApplicant. A comment points out that it's a dummy class. In order to have some kind of initial test, I made a bogus get(ssn) method that I don't test, since I only put it there to return a dummy JobApplicant. There would be proper test coverage when we actually implemented persistence.
+
+Two new classes, extracted from JobApplicant are CityStateLookup and SsnUtilities.
+
+I moved integration tests to a separate package so unit tests can be run with or without them.
 
