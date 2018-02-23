@@ -1,11 +1,7 @@
 Some thoughts about my kata:
 -------------------------------------
 
-The commit 'b70e39b' with the commit message 'merge' was the result of confusing two different copies of the repo on my local and trying to merge from github. It was after I updated package names and moved files around. The merge resulted in, among other minor things, the file PersistanceLayer.jave duplicated in two packages, and I mistakenly pushed it before running tests. As as result of these issues, the project will not build at that commit.
-I fixed the issue on the next commit.
-
-
-CityStateLookup is not what I would like. The lines:
+CityStateLookup is not what I would like. Besides having a clunky usage, the lines:
             	city = "";
             	state = "";
 aren't covered by a test, because I'm not going to take the time right now to inject the CloseableHttpClient to be able to mock it. Also, I'd probably also find another zip code lookup service, one that had a REST API so that we no longer have to maintain the ugly code that parses the HTML.
