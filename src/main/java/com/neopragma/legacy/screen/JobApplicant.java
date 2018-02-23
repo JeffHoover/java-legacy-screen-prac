@@ -18,15 +18,19 @@ public class JobApplicant {
 	SsnUtilities ssnUtilities = new SsnUtilities();
 	
 	public void setName(String firstName, String middleName, String lastName) {
-		this.firstName = firstName == null ? "" : firstName;
-		this.middleName = middleName == null ? "" : middleName;
-		this.lastName = lastName == null ? "" : lastName;
+		this.firstName = nameIfNotNull(firstName);
+		this.middleName = nameIfNotNull(middleName);
+		this.lastName = nameIfNotNull(lastName);
+	}
+
+	private String nameIfNotNull(String name) {
+		return name == null ? "" : name;
 	}
 	
 	public void setSpanishName(String primerNombre, String segundoNombre,
 							   String primerApellido, String segundoApellido) {
-		this.firstName = primerNombre == null ? "" : primerNombre;
-		this.middleName = segundoNombre == null ? "" : segundoNombre;
+		this.firstName = nameIfNotNull(primerNombre);
+		this.middleName = nameIfNotNull(segundoNombre);
 		if ( primerApellido != null ) {
   		    StringBuilder sb = new StringBuilder(primerApellido);
 		    sb.append(segundoApellido == null ? null : " " + segundoApellido);
